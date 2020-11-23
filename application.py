@@ -1,12 +1,14 @@
 from flask import Flask, render_template
+import numpy as np
 import pandas as pd
 import boto3
+import matplotlib.pyplot as plt
+from datetime import date
 
 # EB looks for an 'application' callable by default.
 application = Flask(__name__)
 
 bucket = "brandtrend"
-file_name = "2020-11-22_Lululemon.csv"
 
 s3 = boto3.client('s3') 
 
@@ -39,26 +41,54 @@ def get_trends(date):
         # merge dataframe
         trends_df = pd.merge(trends_df, temp_df, on = 'date', how = 'outer')
         pass
+    # set date as index
+    trends_df = trends_df.set_index('date')
+    # safe a copy of data for visualization
+    full_df = trends_df.copy()
+    # transpose so date is used as column
+    trends_df = trends_df.transpose()
+    
+    # create headings
+    headings = trends_df.columns.values[:]
+    # only use month, day, time for headings
+    headings = list([item[5:] for item in headings])
+    # change the index used in full_df
+    full_df.index = np.array(headings)
+    # add a placeholder for 'Brands'
+    headings.insert(0, 'Brands')
+    headings = tuple(headings)
+    # get brand names as part of records
+    trends_df = trends_df.reset_index()
     # save as a tuple of records
     records = tuple(trends_df.to_records(index = False))
-    # create headings
-    headings = brands[:]
-    headings.insert(0, 'Date')
-    headings = tuple(headings)
-        
-    return records, headings
+    # return data
+    return records, headings, full_df
     
-# using '2020-11-23' as a sample
-records, headings = get_trends('2020-11-23')
+# get today's date
+today = date.today().strftime('%Y-%m-%d')
+# check if today's data is collected in S3
+if today in dates:
+    records, headings, full_data = get_trends(today)
+    pass
+else:
+    headings = ('Brands', 'Time')
+    data = ('Not Available Yet', 'Not Available Yet')
 
-@application.route("/")
-def table():
-    return render_template("display.html",headings=headings,data=records)
+# print(full_data)
 
+plt.figure(figsize= (50, 10))
+plt.plot(full_data.iloc[:, :5])
+plt.legend(labels = full_data.columns.values[:5])
+plt.xticks(rotation = 'vertical')
+plt.savefig('./resources/test.png')
 
-# run the app.
-if __name__ == "__main__":
-    # Setting debug to True enables debug output. This line should be
-    # removed before deploying a production app.
-    application.debug = True
-    application.run(host='0.0.0.0',port=8080)
+# @application.route("/")
+# def table():
+#     return render_template("display.html",headings=headings,data=records, date = today)
+
+# # run the app.
+# if __name__ == "__main__":
+#     # Setting debug to True enables debug output. This line should be
+#     # removed before deploying a production app.
+#     application.debug = True
+#     application.run(host='0.0.0.0',port=8080)
