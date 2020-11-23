@@ -21,7 +21,7 @@ headings = ('Date','Trend')
 
 @application.route("/")
 def table():
-    return render_template("table.html",headings=headings,data=records)
+    return render_template("display.html",headings=headings,data=records)
 
 
 # run the app.
