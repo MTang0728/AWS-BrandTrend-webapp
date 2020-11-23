@@ -1,4 +1,4 @@
-# AWS-BrandTrend0-webapp
+# AWS-BrandTrend-webapp
 
 ![Fig 1](./resources/shopping.jpg)
 
