@@ -63,24 +63,26 @@ def get_trends(date):
     records = tuple(trends_df.to_records(index = False))
     # return data
     return records, headings, full_df
-    
+
+# define a function to plot data
+def plot_trend(data):
+    plt.figure(figsize= (50, 10))
+    plt.plot(data.iloc[:, :5])
+    plt.legend(labels = data.columns.values[:5])
+    plt.xticks(rotation = 'vertical')
+    plt.savefig('./resources/trend.png')
+
 # get today's date
 today = date.today().strftime('%Y-%m-%d')
 # check if today's data is collected in S3
 if today in dates:
     records, headings, full_data = get_trends(today)
+    plot_trend(full_data)
     pass
 else:
     headings = ('Brands', 'Time')
     data = ('Not Available Yet', 'Not Available Yet')
 
-# print(full_data)
-
-plt.figure(figsize= (50, 10))
-plt.plot(full_data.iloc[:, :5])
-plt.legend(labels = full_data.columns.values[:5])
-plt.xticks(rotation = 'vertical')
-plt.savefig('./resources/trend.png')
 
 @application.route("/")
 def table():
