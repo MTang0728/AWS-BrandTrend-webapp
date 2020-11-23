@@ -1,34 +1,32 @@
-from flask import Flask
-
-# print a nice greeting.
-def say_hello(username = "World"):
-    return '<p>Hello %s!</p>\n' % username
-
-# some bits of text for the page.
-header_text = '''
-    <html>\n<head> <title>EB Flask Test</title> </head>\n<body>'''
-instructions = '''
-    <p><em>Hint</em>: This is a RESTful web service! Append a username
-    to the URL (for example: <code>/Thelonious</code>) to say hello to
-    someone specific.</p>\n'''
-home_link = '<p><a href="/">Back</a></p>\n'
-footer_text = '</body>\n</html>'
+from flask import Flask, render_template
+import pandas as pd
+import boto3
 
 # EB looks for an 'application' callable by default.
 application = Flask(__name__)
 
-# add a rule for the index page.
-application.add_url_rule('/', 'index', (lambda: header_text +
-    say_hello() + instructions + footer_text))
+bucket = "brandtrend"
+file_name = "2020-11-22_The North Face.csv"
 
-# add a rule when the page is accessed with a name appended to the site
-# URL.
-application.add_url_rule('/<username>', 'hello', (lambda username:
-    header_text + say_hello(username) + home_link + footer_text))
+s3 = boto3.client('s3') 
+# 's3' is a key word. create connection to S3 using default config and all buckets within S3
+
+obj = s3.get_object(Bucket= bucket, Key= file_name) 
+
+# get object and file (key) from bucket
+
+initial_df = pd.read_csv(obj['Body']) # 'Body' is a key word
+records = tuple(initial_df.to_records(index=False))
+headings = ('Date','Trend')
+
+@application.route("/")
+def table():
+    return render_template("table.html",headings=headings,data=records)
+
 
 # run the app.
 if __name__ == "__main__":
     # Setting debug to True enables debug output. This line should be
     # removed before deploying a production app.
     application.debug = True
-    application.run()
+    application.run(host='0.0.0.0',port=8080)
