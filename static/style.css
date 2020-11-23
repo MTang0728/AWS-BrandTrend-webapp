@@ -1,3 +1,11 @@
+body{ 
+  background: url('https://earthbornbeauty.com/product_images/uploaded_images/trends.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 .table{
     border-spacing: 0;
     margin: 1rem;

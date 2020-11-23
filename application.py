@@ -66,11 +66,12 @@ def get_trends(date):
 
 # define a function to plot data
 def plot_trend(data):
-    plt.figure(figsize= (50, 10))
+    plt.figure(figsize= (40, 10))
     plt.plot(data.iloc[:, :5])
     plt.legend(labels = data.columns.values[:5])
     plt.xticks(rotation = 'vertical')
-    plt.savefig('./resources/trend.png')
+    plt.tight_layout()
+    plt.savefig('./static/trend.png', bbox_inches = "tight")
 
 # get today's date
 today = date.today().strftime('%Y-%m-%d')
@@ -82,7 +83,6 @@ if today in dates:
 else:
     headings = ('Brands', 'Time')
     data = ('Not Available Yet', 'Not Available Yet')
-
 
 @application.route("/")
 def table():
