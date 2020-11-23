@@ -1,6 +1,6 @@
 # AWS-BrandTrend0-webapp
 
-![shopping](shopping.jpg)
+![Fig 1](shopping.jpg)
 
 ## Introduction
 Welcome to our **Brand Trend WebApp** project. This is the final project of the course IDS 706 - Data Engineering Systems of Duke University. My teammate is [Chenxi Wu](https://www.linkedin.com/in/chenxi-wu-107452175/).  
@@ -12,17 +12,21 @@ We were inspired by the biggest Chinese shopping-guide platform in North America
 ## Flowchart
 The process and flowchart of building this project can be summarized as below. 
 
-(insert the flowchart picture)
+![Fig 2](flowchart.png)
 
 ### Web-scraping from Dealmoon
 
-There are many sections on Dealmoon that contain useful information. For example the homepage where all the shopping-guide posts are held. After examining each section, we decided to scrape the product leaderboard that records the items that have the most clicks. It is a dynamic webpage in that the content will continue to load once the user scroll down the page. So we used dynamic scraping method to extract the data we need. We keep the first 30 records of the leaderboard and save the names of brands in a list. 
+There are many sections on Dealmoon that contain useful information. For example the homepage where all the shopping-guide posts are held. After examining each section, we decided to scrape the product leaderboard that records the items that have the most clicks. It is a dynamic webpage in that the content will continue to load once the user scroll down the page. So we used dynamic scraping method to extract the data we need. We built AWS Scraper Lambda function to extract the first 30 records of the leaderboard and save the names of brands in a list. 
 
 ### Get Google trends
 
-Google Trends is a website that analyzes the popularity of top search queries in Google Search across various regions and languages. After getting the real-time most popular items/brands from Dealmoon, we pass the names as keywords to Google trends via API to get the search trend over the last 1-month. The dataframe is stored in Amazon DynamoDB. 
+Google Trends is a website that analyzes the popularity of top search queries in Google Search across various regions and languages. After getting the real-time most popular items/brands from Dealmoon, we pass the brand names as keywords to Google trends via API to get the search trend over the last 1-month. The dataframe is stored in Amazon DynamoDB via Consumer Lambda function. 
 
 ### Build Data-pipeline
+
+To make the project in continuous-delivery, we set the the timespan to be 1-day, which means the DynomoDB will update every 1 day. 
+
+
 
 
 
