@@ -80,15 +80,15 @@ plt.figure(figsize= (50, 10))
 plt.plot(full_data.iloc[:, :5])
 plt.legend(labels = full_data.columns.values[:5])
 plt.xticks(rotation = 'vertical')
-plt.savefig('./resources/test.png')
+plt.savefig('./resources/trend.png')
 
-# @application.route("/")
-# def table():
-#     return render_template("display.html",headings=headings,data=records, date = today)
+@application.route("/")
+def table():
+    return render_template("display.html",headings=headings,data=records, date = today)
 
-# # run the app.
-# if __name__ == "__main__":
-#     # Setting debug to True enables debug output. This line should be
-#     # removed before deploying a production app.
-#     application.debug = True
-#     application.run(host='0.0.0.0',port=8080)
+# run the app.
+if __name__ == "__main__":
+    # Setting debug to True enables debug output. This line should be
+    # removed before deploying a production app.
+    application.debug = True
+    application.run(host='0.0.0.0',port=8080)
