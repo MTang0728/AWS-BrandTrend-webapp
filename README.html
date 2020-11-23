@@ -380,10 +380,17 @@ summary {
 <div id="flowchart" class="section level2">
 <h2>Flowchart</h2>
 <p>The process and flowchart of building this project can be summarized as below.</p>
-<p>(insert the picture)</p>
+<p>(insert the flowchart picture)</p>
 <div id="web-scraping-from-dealmoon" class="section level3">
 <h3>Web-scraping from Dealmoon</h3>
-<p>There are many sections on Dealmoon that contain useful information. For example the homepage where all the shopping-guide posts are held. After examining each section, we decided to scrape the product leaderboard</p>
+<p>There are many sections on Dealmoon that contain useful information. For example the homepage where all the shopping-guide posts are held. After examining each section, we decided to scrape the product leaderboard that records the items that have the most clicks. It is a dynamic webpage in that the content will continue to load once the user scroll down the page. So we used dynamic scraping method to extract the data we need. We keep the first 30 records of the leaderboard and save the names of brands in a list.</p>
+</div>
+<div id="get-google-trends" class="section level3">
+<h3>Get Google trends</h3>
+<p>Google Trends is a website that analyzes the popularity of top search queries in Google Search across various regions and languages. After getting the real-time most popular items/brands from Dealmoon, we pass the names as keywords to Google trends via API to get the search trend over the last 1-month. The dataframe is stored in Amazon DynamoDB.</p>
+</div>
+<div id="build-data-pipeline" class="section level3">
+<h3>Build Data-pipeline</h3>
 </div>
 </div>
 </div>
