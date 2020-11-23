@@ -4,6 +4,7 @@ import pandas as pd
 import boto3
 import matplotlib.pyplot as plt
 from datetime import date
+import random
 
 # EB looks for an 'application' callable by default.
 application = Flask(__name__)
@@ -64,11 +65,17 @@ def get_trends(date):
     # return data
     return records, headings, full_df
 
+# define a function to randomly select 5 brands
+def select_trend(data):
+    selected_brands = random.sample(list(data.columns.values), 5)
+    selected_df = data.loc[:, selected_brands]
+    return selected_df
+    
 # define a function to plot data
 def plot_trend(data):
     plt.figure(figsize= (40, 10))
-    plt.plot(data.iloc[:, :5])
-    plt.legend(labels = data.columns.values[:5])
+    plt.plot(data)
+    plt.legend(labels = data.columns.values, loc = 'upper left')
     plt.xticks(rotation = 'vertical')
     plt.tight_layout()
     plt.savefig('./static/trend.png', bbox_inches = "tight")
@@ -78,12 +85,13 @@ today = date.today().strftime('%Y-%m-%d')
 # check if today's data is collected in S3
 if today in dates:
     records, headings, full_data = get_trends(today)
-    plot_trend(full_data)
+    selected_data = select_trend(full_data)
+    plot_trend(selected_data)
     pass
 else:
     headings = ('Brands', 'Time')
     data = ('Not Available Yet', 'Not Available Yet')
-
+    
 @application.route("/")
 def table():
     return render_template("display.html",headings=headings,data=records, date = today)
