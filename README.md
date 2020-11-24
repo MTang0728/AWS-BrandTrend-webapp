@@ -29,6 +29,9 @@ Google Trends is a website that analyzes the popularity of top search queries in
 
 To make the project in continuous-delivery, we set the the timespan to be 1-day, which means the DynomoDB will update every 1 day. 
 
+This data pipeline porcesses are implemented with AWS Lambda, which are store in a backend repository: [Serverless-Data-Pipeline](https://github.com/MTang0728/Serverless-Data-Pipeline)
+
+
 
 
 
