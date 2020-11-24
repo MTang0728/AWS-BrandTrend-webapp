@@ -77,7 +77,16 @@ def plot_trend(data):
     plt.plot(data)
     plt.legend(labels = data.columns.values, loc = 'upper left')
     plt.xticks(rotation = 'vertical')
+    plt.ylabel('Trend', rotation = 'vertical')
     plt.tight_layout()
+    plt.savefig('./static/trend.png', bbox_inches = "tight")
+
+# define a function to plot empty plot
+def plot_empty():
+    plt.figure(figsize= (40, 10))
+    plt.plot()
+    plt.axis('off')
+    plt.title('NO DATA AVAILABLE YET, COME BACK LATER :)')
     plt.savefig('./static/trend.png', bbox_inches = "tight")
 
 # get today's date
@@ -90,8 +99,9 @@ if today in dates:
     pass
 else:
     headings = ('Brands', 'Time')
-    data = ('Not Available Yet', 'Not Available Yet')
-    
+    records = ('NA', 'NA')
+    plot_empty()
+
 @application.route("/")
 def table():
     return render_template("display.html",headings=headings,data=records, date = today)
