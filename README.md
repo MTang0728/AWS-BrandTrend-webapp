@@ -3,7 +3,7 @@
 ![Fig 1](./resources/shopping.jpg)
 
 ## Introduction
-Welcome to our **Brand Trend WebApp** project. This is the final project of the course IDS 706 - Data Engineering Systems of Duke University. My teammate is [Chenxi Wu](https://www.linkedin.com/in/chenxi-wu-107452175/).  
+Welcome to our [**Brand Trend WebApp**](https://github.com/MTang0728/AWS-BrandTrend-webapp.git) project. This is the final project of the course IDS 706 - Data Engineering Systems of Duke University. My teammate is [Chenxi Wu](https://www.linkedin.com/in/chenxi-wu-107452175/).  
 
 We built an integrated data pipeline as well as an interactive WebApp to display our result. The main tools we used are Amazon DynamoDB, SQS AWS S3 buckets and Flask. 
 
