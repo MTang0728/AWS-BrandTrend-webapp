@@ -102,6 +102,7 @@ else:
     records = ('NA', 'NA')
     plot_empty()
 
+
 @application.route("/")
 def table():
     return render_template("display.html",headings=headings,data=records, date = today)
