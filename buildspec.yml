@@ -1,21 +1,13 @@
 version: 0.2
 
-
 phases:
-    install:
-        runtime-versions:
-            python: 3.8
-    pre_build:
-        commands:
-            - pip install -r requirements.txt
-    build:
-        commands:
-            - python -m unittest discover -s ./
-    post_build:
-        commands:
-            - echo Build completed on 'date'
-            
+  pre_build:
+    commands:
+      - pip install -r requirements.txt
+  build:
+    commands:
+      - python -m unittest discover -s ./
 artifacts:
-files:
+  files:
     - '**/*'
-base-directory: ./
+  base-directory: ./
