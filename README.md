@@ -12,7 +12,7 @@ We were inspired by the biggest Chinese shopping-guide platform in North America
 ## Flowchart
 The process and flowchart of building this project can be summarized as below. 
 
-![Fig 2](./resources/flowchart.png)
+![Fig 2](./resources/flow.png)
 
 ### Web-scraping from Dealmoon
 
