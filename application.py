@@ -89,19 +89,6 @@ def plot_empty():
     plt.title('NO DATA AVAILABLE YET, COME BACK LATER :)')
     plt.savefig('./static/trend.png', bbox_inches = "tight")
 
-# # get today's date
-# today = date.today().strftime('%Y-%m-%d')
-# # check if today's data is collected in S3
-# if today in dates:
-#     records, headings, full_data = get_trends(today)
-#     selected_data = select_trend(full_data)
-#     plot_trend(selected_data)
-#     pass
-# else:
-#     headings = ('Brands', 'Time')
-#     records = ('NA', 'NA')
-#     plot_empty()
-
 
 @application.route("/")
 def table():

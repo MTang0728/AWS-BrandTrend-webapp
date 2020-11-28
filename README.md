@@ -37,10 +37,11 @@ The process and workflow of our project can be summarized in the figure below:
 
 Note that this repository only contains source codes for the **Front End** operation, which is based on data stored in AWS S3. More specifically, each piece of data in our S3 represents the trend for a particular brand on a particular day. This is illustrated in the figure below:
 
+![Fig 3](./resources/s3.png)
+
 Depending on the time, different data are selected to perform simple trend analysis through plots and tables. This analysis is constructed on a Flask application, which is a popular web framework for Python and runs on a local server. The webapp is then deployed with AWS Elastic Beanstalk to bring it online.
 
-Finally, CodePipeline is used to streamline the deployment process - Any commits to this GitHub repository would trigger this pipeline to rebuild and deploy the webapp automatically. This is illustrated in the figure below:
-
+Finally, CodePipeline is used to streamline the deployment process - Any commits to this GitHub repository would trigger this pipeline to rebuild and deploy the webapp automatically. 
 
 The **Back End** operation involves the following high-level processes:
 
