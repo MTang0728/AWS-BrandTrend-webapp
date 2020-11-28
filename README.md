@@ -3,7 +3,7 @@
 ![Fig 1](./resources/shopping.jpg)
 
 ## Introduction
-Welcome to our [**Brand Trend WebApp**](http://trend-flask-env.eba-ubjwp9wg.us-east-1.elasticbeanstalk.com) project. This is the final project of the course IDS 706 - Data Engineering Systems of Duke University. My teammate is [Chenxi Wu](https://www.linkedin.com/in/chenxi-wu-107452175/).  
+Welcome to the [**Brand Trend WebApp**](http://trend-flask-env.eba-ubjwp9wg.us-east-1.elasticbeanstalk.com) built by Michael Tang and [Chenxi Wu](https://www.linkedin.com/in/chenxi-wu-107452175/). In this project, we built a simple interface that provides daily trend updates on brands through plots and tables. The brands shown in our webapp are updated on a daily basis and could range from fashion apparels to consumer electronics. The goal is to conduct a simple trend analysis by looking at if a sale would affect the brand's popularity on the web. Note: we are assuming that a brand's popularity can be represented by it corresponding Google Trend search result. The webapp is buil using Flas applicatio and ran on the principle of a Serverless Data Pipeline, where all functions are implemented using AWS cloud services. We also include continuous integratio an deployment (CI/CD), which simplifies the development and change-making process.
 
 We built an integrated data pipeline as well as an interactive WebApp to display our result. The main tools we used are Amazon DynamoDB, SQS AWS S3 buckets and Flask. 
 
