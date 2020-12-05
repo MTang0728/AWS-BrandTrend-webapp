@@ -4,6 +4,7 @@ import pandas as pd
 import boto3
 import matplotlib.pyplot as plt
 from datetime import date
+from datetime import timedelta
 import random
 
 # EB looks for an 'application' callable by default.
@@ -44,6 +45,8 @@ def get_trends(date):
         pass
     # set date as index
     trends_df = trends_df.set_index('date')
+    trends_df = trends_df.sort_index()
+    
     # safe a copy of data for visualization
     full_df = trends_df.copy()
     # transpose so date is used as column
@@ -67,13 +70,16 @@ def get_trends(date):
 
 # define a function to randomly select 5 brands
 def select_trend(data):
-    selected_brands = random.sample(list(data.columns.values), 5)
-    selected_df = data.loc[:, selected_brands]
-    return selected_df
+    if data.shape[1] > 5:
+        selected_brands = random.sample(list(data.columns.values), 5)
+        selected_df = data.loc[:, selected_brands]
+        return selected_df
+    else:
+        return data
     
 # define a function to plot data
 def plot_trend(data):
-    plt.figure(figsize= (40, 10))
+    plt.figure(figsize= (20, 7))
     plt.plot(data)
     plt.legend(labels = data.columns.values, loc = 'upper left')
     plt.xticks(rotation = 'vertical')
@@ -83,20 +89,21 @@ def plot_trend(data):
 
 # define a function to plot empty plot
 def plot_empty():
-    plt.figure(figsize= (40, 10))
+    plt.figure(figsize= (20, 7))
     plt.plot()
     plt.axis('off')
     plt.title('NO DATA AVAILABLE YET, COME BACK LATER :)')
     plt.savefig('./static/trend.png', bbox_inches = "tight")
 
-
 @application.route("/")
 def table():
         # get today's date
-    today = date.today().strftime('%Y-%m-%d')
+    today = date.today()
+    delta = timedelta(days=1) 
+    yesterday = (today - delta).strftime('%Y-%m-%d')
     # check if today's data is collected in S3
-    if today in dates:
-        records, headings, full_data = get_trends(today)
+    if yesterday in dates:
+        records, headings, full_data = get_trends(yesterday)
         selected_data = select_trend(full_data)
         plot_trend(selected_data)
         pass
