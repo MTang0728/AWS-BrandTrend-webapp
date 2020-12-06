@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import numpy as np
 import pandas as pd
 import boto3
@@ -79,10 +79,16 @@ def select_trend(data):
     
 # define a function to plot data
 def plot_trend(data):
+    data.reset_index(inplace = True)
+    data['index'] = data['index'].apply(lambda x: x[6:])
+    data.set_index('index', inplace = True)
+    loc = np.arange(0, 166, 15) 
+    lables = ['0:00', '2:00', '4:00', '6:00', '8:00', '10:00',
+              '12:00', '14:00', '16:00', '18:00', '20:00', '22:00']
     plt.figure(figsize= (20, 7))
     plt.plot(data)
     plt.legend(labels = data.columns.values, loc = 'upper left')
-    plt.xticks(rotation = 'vertical')
+    plt.xticks(ticks = loc)
     plt.ylabel('Trend', rotation = 'vertical')
     plt.tight_layout()
     plt.savefig('./static/trend.png', bbox_inches = "tight")
@@ -97,7 +103,7 @@ def plot_empty():
 
 @application.route("/")
 def table():
-        # get today's date
+     # get today's date
     today = date.today()
     delta = timedelta(days=1) 
     yesterday = (today - delta).strftime('%Y-%m-%d')
