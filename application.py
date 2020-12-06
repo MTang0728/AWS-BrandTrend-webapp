@@ -55,7 +55,7 @@ def get_trends(date):
     # create headings
     headings = trends_df.columns.values[:]
     # only use month, day, time for headings
-    headings = list([item[5:] for item in headings])
+    headings = list([item[11:] for item in headings])
     # change the index used in full_df
     full_df.index = np.array(headings)
     # add a placeholder for 'Brands'
@@ -83,8 +83,7 @@ def plot_trend(data):
     data['index'] = data['index'].apply(lambda x: x[6:])
     data.set_index('index', inplace = True)
     loc = np.arange(0, 166, 15) 
-    lables = ['0:00', '2:00', '4:00', '6:00', '8:00', '10:00',
-              '12:00', '14:00', '16:00', '18:00', '20:00', '22:00']
+    
     plt.figure(figsize= (20, 7))
     plt.plot(data)
     plt.legend(labels = data.columns.values, loc = 'upper left')
