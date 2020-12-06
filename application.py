@@ -79,11 +79,11 @@ def select_trend(data):
     
 # define a function to plot data
 def plot_trend(data):
-    data.reset_index(inplace = True)
-    data['index'] = data['index'].apply(lambda x: x[6:])
-    data.set_index('index', inplace = True)
+    print(data.head())
+    # data.reset_index(inplace = True)
+    # data['index'] = data['index'].apply(lambda x: x[6:])
+    # data.set_index('index', inplace = True)
     loc = np.arange(0, 166, 15) 
-    
     plt.figure(figsize= (20, 7))
     plt.plot(data)
     plt.legend(labels = data.columns.values, loc = 'upper left')
@@ -99,6 +99,15 @@ def plot_empty():
     plt.axis('off')
     plt.title('NO DATA AVAILABLE YET, COME BACK LATER :)')
     plt.savefig('./static/trend.png', bbox_inches = "tight")
+    
+today = date.today()
+delta = timedelta(days=1) 
+yesterday = (today - delta).strftime('%Y-%m-%d')
+# check if today's data is collected in S3
+if yesterday in dates:
+    records, headings, full_data = get_trends(yesterday)
+    selected_data = select_trend(full_data)
+    plot_trend(selected_data)
 
 @application.route("/")
 def table():
